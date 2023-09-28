@@ -8,7 +8,7 @@ type TodoItemProps = {
   completedStatus: boolean;
 }
 
-const TodoItem = ({ title, id, completedStatus }: TodoItemProps): JSX.Element => {
+const TodoItem = ({ title, id, completedStatus = false }: TodoItemProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

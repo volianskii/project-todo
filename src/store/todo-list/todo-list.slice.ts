@@ -1,4 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const getTodosAsync = createAsyncThunk(
+  'todos/getTodosAsync',
+  async () => {
+    const response = await fetch ('http://localhost:7000/todos');
+    if(response.ok) {
+      const todos = await response.json();
+      return { todos };
+    }
+})
 
 const todoListSlice = createSlice({
   name: 'todoList',
@@ -20,7 +30,7 @@ const todoListSlice = createSlice({
     },
     {
       id: 4,
-      title: 'todo4',
+      title: 'todffo4',
       completedStatus: false
     }
   ],
@@ -40,6 +50,16 @@ const todoListSlice = createSlice({
       const index = state.findIndex((item) => item.id === action.payload.id);
       state[index].completedStatus = action.payload.completedStatus;
     } 
+  },
+  extraReducers(builder) {
+    builder
+      .addCase (getTodosAsync.pending, () => {
+        console.log('data is fetching');
+      })
+      .addCase (getTodosAsync.fulfilled, (state, action) => {
+        state = action.payload?.todos;
+        return state;
+      });
   }
 })
 const todoReducer = todoListSlice.reducer;
