@@ -1,16 +1,16 @@
 import { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '../../hooks/index';
 import { addTodo } from '../../store/todo-list/todo-list.slice'
 
 const Add = () => {
   const [value, setValue] = useState<string>('');
+  const dispatch = useAppDispatch();
   const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     dispatch(addTodo(value));
     setValue('');
-
   }
-  const dispatch = useDispatch();
+
 
   return (
     <form onSubmit={submitHandler}>

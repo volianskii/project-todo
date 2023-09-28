@@ -11,7 +11,7 @@ const todoListSlice = createSlice({
     {
       id: 2,
       title: 'todo2',
-      completedStatus: false
+      completedStatus: true
     },
     {
       id: 3,
@@ -32,9 +32,16 @@ const todoListSlice = createSlice({
         completedStatus: false
       };
       state.push(newTodo);
-    }
+    },
+    deleteTodo: (state, action) => {
+      return state.filter((item) => item.id !== action.payload);
+    },
+    toggleCompletedStatus: (state, action) => {
+      const index = state.findIndex((item) => item.id === action.payload.id);
+      state[index].completedStatus = action.payload.completedStatus;
+    } 
   }
 })
 const todoReducer = todoListSlice.reducer;
-export const { addTodo } = todoListSlice.actions;
+export const { addTodo, deleteTodo, toggleCompletedStatus } = todoListSlice.actions;
 export default todoReducer;

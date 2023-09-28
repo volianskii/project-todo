@@ -1,19 +1,13 @@
 import TodoItem from '../todo-item/todo-item';
-import { useSelector } from 'react-redux';
-
-type itemType = {
-  title: string
-};
-type itemsListType = itemType[];
+import { useAppSelector } from '../../hooks/index';
 
 const TodoList = (): JSX.Element => {
-  const itemsListStore = useSelector((state) => state.todoList)
+  const itemsList = useAppSelector((state) => state.todoList);
   return (
     <>
-      {itemsListStore.map((item, index) => {
-        const keyValue = `item-${index}`;
+      {itemsList.map((item) => {
         return (
-          <TodoItem title={item.title} key={keyValue} />
+          <TodoItem title={item.title} id={item.id} key={item.id} completedStatus={item.completedStatus} />
         );
       })}
     </>
