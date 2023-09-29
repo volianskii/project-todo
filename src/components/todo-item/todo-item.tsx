@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { deleteTodo, toggleCompletedStatus } from "../../store/todo-list/todo-list.slice";
+import { deleteTodo, toggleCompletedStatus, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
 type TodoItemProps = {
@@ -16,7 +16,7 @@ const TodoItem = ({ title, id, completedStatus = false }: TodoItemProps): JSX.El
     console.log(`${title} deleted`);
   }
   const completedHandler = (event: FormEvent<HTMLInputElement>) => {
-    dispatch(toggleCompletedStatus({
+    dispatch(toggleCompletedAsync({
       id: id,
       completedStatus: !completedStatus
     }))

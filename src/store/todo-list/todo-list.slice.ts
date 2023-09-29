@@ -9,6 +9,44 @@ export const getTodosAsync = createAsyncThunk(
       return { todos };
     }
 })
+ type addPayload = {
+  title: string;
+ }
+ type togglePayload = {
+  id: number;
+  completedStatus: boolean;
+ }
+export const addTodoAsync = createAsyncThunk(
+  'todos/addTodosAsync',
+  async (payload: addPayload) => {
+    const response = await fetch ('http://localhost:7000/todos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({title: payload.title})
+    });
+    if(response.ok) {
+      const todo = await response.json();
+      return { todo };
+    }
+})
+
+export const toggleCompletedAsync = createAsyncThunk(
+  'todos/toggleCompletedAsync',
+  async (payload: togglePayload) => {
+    const response = await fetch (`http://localhost:7000/todos/${payload.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({completed: payload.completedStatus})
+    });
+    if(response.ok) {
+      const todo = await response.json();
+      return { id: todo.id, completedStatus: todo.completed };
+    }
+})
 
 const todoListSlice = createSlice({
   name: 'todoList',
@@ -59,7 +97,14 @@ const todoListSlice = createSlice({
       .addCase (getTodosAsync.fulfilled, (state, action) => {
         state = action.payload?.todos;
         return state;
-      });
+      })
+      .addCase (addTodoAsync.fulfilled, (state, action) => {
+        state.push(action.payload?.todo);
+      })
+      .addCase (toggleCompletedAsync.fulfilled, (state, action) => {
+        const index = state.findIndex((item) => item.id === action.payload?.id);
+        state[index].completedStatus = action.payload?.completedStatus;
+      })
   }
 })
 const todoReducer = todoListSlice.reducer;
