@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks/index';
 
 const CompletedCount = () => {
   const todoList = useAppSelector((state) => state.todoList);
-  const completedTasks = todoList.filter((item) => item.completedStatus === true);
+  const completedTasks = todoList.filter((item) => item.completed === true);
 
   return (
     <div>

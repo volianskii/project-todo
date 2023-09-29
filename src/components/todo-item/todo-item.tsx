@@ -5,10 +5,10 @@ import { useAppDispatch } from "../../hooks";
 type TodoItemProps = {
   title: string;
   id: number;
-  completedStatus: boolean;
+  completed: boolean;
 }
 
-const TodoItem = ({ title, id, completedStatus = false }: TodoItemProps): JSX.Element => {
+const TodoItem = ({ title, id, completed = false }: TodoItemProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,14 +18,14 @@ const TodoItem = ({ title, id, completedStatus = false }: TodoItemProps): JSX.El
   const completedHandler = (event: FormEvent<HTMLInputElement>) => {
     dispatch(toggleCompletedAsync({
       id: id,
-      completedStatus: !completedStatus
+      completed: !completed
     }))
   }
 
   return (
     <div>
       <form>
-        <input type="checkbox" onChange={completedHandler} checked={completedStatus} />
+        <input type="checkbox" onChange={completedHandler} checked={completed} />
       </form>
       <p>{title}</p>
       <form onSubmit={submitHandler}>

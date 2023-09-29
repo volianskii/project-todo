@@ -14,7 +14,7 @@ export const getTodosAsync = createAsyncThunk(
  }
  type togglePayload = {
   id: number;
-  completedStatus: boolean;
+  completed: boolean;
  }
 export const addTodoAsync = createAsyncThunk(
   'todos/addTodosAsync',
@@ -40,11 +40,11 @@ export const toggleCompletedAsync = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({completed: payload.completedStatus})
+      body: JSON.stringify({completed: payload.completed})
     });
     if(response.ok) {
       const todo = await response.json();
-      return { id: todo.id, completedStatus: todo.completed };
+      return { id: todo.id, completed: todo.completed };
     }
 })
 
@@ -54,22 +54,22 @@ const todoListSlice = createSlice({
     {
       id: 1,
       title: 'todo1',
-      completedStatus: false
+      completed: false
     },
     {
       id: 2,
       title: 'todo2',
-      completedStatus: true
+      completed: true
     },
     {
       id: 3,
       title: 'todo3',
-      completedStatus: false
+      completed: false
     },
     {
       id: 4,
       title: 'todffo4',
-      completedStatus: false
+      completed: false
     }
   ],
   reducers: {
@@ -77,7 +77,7 @@ const todoListSlice = createSlice({
       const newTodo = {
         id: Date.now(),
         title: action.payload,
-        completedStatus: false
+        completed: false
       };
       state.push(newTodo);
     },
@@ -86,7 +86,7 @@ const todoListSlice = createSlice({
     },
     toggleCompletedStatus: (state, action) => {
       const index = state.findIndex((item) => item.id === action.payload.id);
-      state[index].completedStatus = action.payload.completedStatus;
+      state[index].completed = action.payload.completed;
     } 
   },
   extraReducers(builder) {
@@ -103,7 +103,7 @@ const todoListSlice = createSlice({
       })
       .addCase (toggleCompletedAsync.fulfilled, (state, action) => {
         const index = state.findIndex((item) => item.id === action.payload?.id);
-        state[index].completedStatus = action.payload?.completedStatus;
+        state[index].completed = action.payload?.completed;
       })
   }
 })

@@ -13,7 +13,7 @@ const TodoList = (): JSX.Element => {
     <>
       {itemsList.map((item) => {
         return (
-          <TodoItem title={item.title} id={item.id} key={item.id} completedStatus={item.completedStatus} />
+          <TodoItem title={item.title} id={item.id} key={item.id} completed={item.completed} />
         );
       })}
     </>
