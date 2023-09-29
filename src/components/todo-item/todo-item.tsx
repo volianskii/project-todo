@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { deleteTodo, toggleCompletedStatus, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
+import { deleteTodo, deleteTodoAsync, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
 type TodoItemProps = {
@@ -12,7 +12,7 @@ const TodoItem = ({ title, id, completed = false }: TodoItemProps): JSX.Element 
   const dispatch = useAppDispatch();
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(deleteTodo(id));
+    dispatch(deleteTodoAsync({ id }));
     console.log(`${title} deleted`);
   }
   const completedHandler = (event: FormEvent<HTMLInputElement>) => {

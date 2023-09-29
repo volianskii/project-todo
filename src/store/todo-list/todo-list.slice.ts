@@ -16,6 +16,9 @@ export const getTodosAsync = createAsyncThunk(
   id: number;
   completed: boolean;
  }
+ type deletePayload = {
+  id: number;
+ }
 export const addTodoAsync = createAsyncThunk(
   'todos/addTodosAsync',
   async (payload: addPayload) => {
@@ -45,6 +48,22 @@ export const toggleCompletedAsync = createAsyncThunk(
     if(response.ok) {
       const todo = await response.json();
       return { id: todo.id, completed: todo.completed };
+    }
+})
+
+export const deleteTodoAsync = createAsyncThunk(
+  'todos/deleteTodoAsync',
+  async (payload: deletePayload) => {
+    const response = await fetch (`http://localhost:7000/todos/${payload.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({id: payload.id})
+    });
+    if(response.ok) {
+      const todos = await response.json();
+      return { todos };
     }
 })
 
@@ -105,6 +124,10 @@ const todoListSlice = createSlice({
         const index = state.findIndex((item) => item.id === action.payload?.id);
         state[index].completed = action.payload?.completed;
       })
+      .addCase (deleteTodoAsync.fulfilled, (state, action) => {
+        state = action.payload?.todos;
+        return state;
+      });
   }
 })
 const todoReducer = todoListSlice.reducer;
