@@ -23,13 +23,15 @@ const TodoItem = ({ title, id, completed = false }: TodoItemProps): JSX.Element 
   }
 
   return (
-    <div>
+    <div className="item-container">
       <form>
         <input type="checkbox" onChange={completedHandler} checked={completed} />
       </form>
-      <p>{title}</p>
+      <div>
+        <p>{title}</p>
+      </div>
       <form onSubmit={submitHandler}>
-        <button type="submit">Delete</button>
+        <button type="submit" className="delete-button">Delete</button>
       </form>
     </div>
   );

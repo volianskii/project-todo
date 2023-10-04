@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-    <App name='David' />
+    <App />
   </Provider>
 )

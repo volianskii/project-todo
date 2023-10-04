@@ -9,9 +9,10 @@ const TodoList = (): JSX.Element => {
     dispatch(getTodosAsync());
   }, [dispatch])
   const itemsList = useAppSelector((state) => state.todoList);
+  const todoItemsList = itemsList.filter((item) => item.completed === false)
   return (
     <>
-      {itemsList.map((item) => {
+      {todoItemsList.map((item) => {
         return (
           <TodoItem title={item.title} id={item.id} key={item.id} completed={item.completed} />
         );

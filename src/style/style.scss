@@ -1,6 +1,98 @@
 $big: 5em;
+$button-font: 15px;
+$border-item-radius: 7px;
+$border-button-radius: 5px;
+.main-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  margin-top: 15px;
+  row-gap: 5px;
+}
+
+.item-container {
+  box-sizing: border-box;
+  max-width: 400px;
+  display: grid;
+  grid-template-columns: min-content minmax(100px, 400px) auto;
+  column-gap: 3px;
+  grid-template-rows: auto;
+  align-items: center;
+  border:2px solid rgb(221, 221, 221);
+  border-radius: $border-item-radius;
+  padding-right: 5px;
+}
+
+.delete-button {
+  background-color: rgb(246, 48, 48);
+  color: white;
+  border: none;
+  width: 60px;
+  height: 25px;
+  font-size: $button-font;
+  border-radius: $border-button-radius;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-input {
+  box-sizing: border-box;
+  max-width: 400px;
+  height: 40px;
+  font-size: $button-font;
+  margin-bottom: 5px;
+  padding: 0 0 0 5px;
+  /* padding-left: 5px; */
+  border-radius: $border-item-radius;
+}
+
+.add-button {
+  width: 50px;
+  height: 40px;
+  border: none;
+  font-size: $button-font;
+  color: rgb(134, 134, 134);
+  background-color: rgb(185, 255, 185);
+  border-radius: $border-button-radius;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg-yellow {
+  background-color: rgb(255, 255, 166);
+}
+
+.bg-green {
+  background-color: rgb(190, 255, 190);
+}
 
 h1 {
   font-size: $big;
-  color: red;
+  color: rgb(134, 134, 134);
+}
+
+section {
+  border:2px solid rgb(221, 221, 221);
+  padding: 5px;
 }

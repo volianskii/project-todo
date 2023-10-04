@@ -17,9 +17,9 @@ const Add = () => {
 
 
   return (
-    <form onSubmit={submitHandler}>
-      <input type="text" placeholder="Add todo.." value={value} onChange={(event) => setValue(event.target.value)} />
-      <button type="submit">Add</button>
+    <form onSubmit={submitHandler} className="add-form">
+      <input type="text" className="add-input" placeholder="Add todo.." value={value} onChange={(event) => setValue(event.target.value)} />
+      <button type="submit" className="add-button">Add</button>
     </form>
   )
 }
