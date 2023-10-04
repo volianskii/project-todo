@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 import { deleteTodo, deleteTodoAsync, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
-type TodoItemProps = {
+export type TodoItemProps = {
   title: string;
   id: number;
   completed: boolean;
@@ -23,7 +23,7 @@ const TodoItem = ({ title, id, completed = false }: TodoItemProps): JSX.Element 
   }
 
   return (
-    <div className="item-container">
+    <div className="item-container" draggable>
       <form>
         <input type="checkbox" onChange={completedHandler} checked={completed} />
       </form>

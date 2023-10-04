@@ -1,8 +1,6 @@
 import TodoItem from '../todo-item/todo-item';
-import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { useEffect } from 'react';
-import { getTodosAsync } from '../../store/todo-list/todo-list.slice';
-import React from 'react';
+import { useAppSelector } from '../../hooks/index';
+
 
 const DoneList = (): JSX.Element => {
   const itemsList = useAppSelector((state) => state.todoList);
