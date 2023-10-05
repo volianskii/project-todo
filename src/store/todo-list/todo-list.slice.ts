@@ -13,11 +13,15 @@ export const getTodosAsync = createAsyncThunk(
   title: string;
  }
  type togglePayload = {
-  id: number;
+  id: string;
   completed: boolean;
  }
+ type toggleWIPPayload = {
+  id: string;
+  wip: boolean;
+ }
  type deletePayload = {
-  id: number;
+  id: string;
  }
 export const addTodoAsync = createAsyncThunk(
   'todos/addTodosAsync',
@@ -51,6 +55,22 @@ export const toggleCompletedAsync = createAsyncThunk(
     }
 })
 
+export const toggleWIPAsync = createAsyncThunk(
+  'todos/toggleWIPAsync',
+  async (payload: toggleWIPPayload) => {
+    const response = await fetch (`http://localhost:7000/todos/${payload.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({wip: payload.wip})
+    });
+    if(response.ok) {
+      const todo = await response.json();
+      return { id: todo.id, wip: todo.wip };
+    }
+})
+
 export const deleteTodoAsync = createAsyncThunk(
   'todos/deleteTodoAsync',
   async (payload: deletePayload) => {
@@ -71,32 +91,37 @@ const todoListSlice = createSlice({
   name: 'todoList',
   initialState: [
     {
-      id: 1,
+      id: '1',
       title: 'todo1',
-      completed: false
+      completed: false,
+      wip: false,
     },
     {
-      id: 2,
+      id: '2',
       title: 'todo2',
-      completed: true
+      completed: true,
+      wip: false,
     },
     {
-      id: 3,
+      id: '3',
       title: 'todo3',
-      completed: false
+      completed: false,
+      wip: false,
     },
     {
-      id: 4,
+      id: '4',
       title: 'todffo4',
-      completed: false
+      completed: false,
+      wip: false,
     }
   ],
   reducers: {
     addTodo: (state, action) => {
       const newTodo = {
-        id: Date.now(),
+        id: Date.now().toString(),
         title: action.payload,
-        completed: false
+        completed: false,
+        wip: false,
       };
       state.push(newTodo);
     },
@@ -127,6 +152,10 @@ const todoListSlice = createSlice({
       .addCase (deleteTodoAsync.fulfilled, (state, action) => {
         state = action.payload?.todos;
         return state;
+      })
+      .addCase (toggleWIPAsync.fulfilled, (state, action) => {
+        const index = state.findIndex((item) => item.id === action.payload?.id);
+        state[index].wip = action.payload?.wip;
       });
   }
 })

@@ -1,29 +1,37 @@
 import { FormEvent } from "react";
-import { deleteTodo, deleteTodoAsync, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
+import { deleteTodoAsync, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
 export type TodoItemProps = {
   title: string;
-  id: number;
+  id: string;
   completed: boolean;
+  onDragStart: (id: string) => void;
 }
 
-const TodoItem = ({ title, id, completed = false }: TodoItemProps): JSX.Element => {
+const TodoItem = ({ title, id, completed = false, onDragStart }: TodoItemProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(deleteTodoAsync({ id }));
     console.log(`${title} deleted`);
-  }
+  };
   const completedHandler = (event: FormEvent<HTMLInputElement>) => {
     dispatch(toggleCompletedAsync({
       id: id,
       completed: !completed
-    }))
-  }
+    }));
+  };
+  const onDropHandler = (e) => {
+    e.preventDefault();
+    console.log(title);
+  };
+  const onDragOverHandler = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <div className="item-container" draggable>
+    <div className="item-container" draggable onDragStart={() => onDragStart(id)} onDrop={(e) => onDropHandler(e, title)} onDragOver={(e) => onDragOverHandler(e)}>
       <form>
         <input type="checkbox" onChange={completedHandler} checked={completed} />
       </form>
