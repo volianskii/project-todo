@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { deleteTodoAsync, toggleCompletedAsync } from "../../store/todo-list/todo-list.slice";
+import { deleteTodoAsync, toggleCompletedAsync, toggleWIPAsync } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
 export type TodoItemProps = {
@@ -16,22 +16,21 @@ const TodoItem = ({ title, id, completed = false, onDragStart }: TodoItemProps):
     dispatch(deleteTodoAsync({ id }));
     console.log(`${title} deleted`);
   };
-  const completedHandler = (event: FormEvent<HTMLInputElement>) => {
+  const completedHandler = () => {
     dispatch(toggleCompletedAsync({
       id: id,
+      completed: !completed,
+      wip: false
+    }));
+    dispatch(toggleWIPAsync({
+      id: id,
+      wip: false,
       completed: !completed
     }));
   };
-  const onDropHandler = (e) => {
-    e.preventDefault();
-    console.log(title);
-  };
-  const onDragOverHandler = (e) => {
-    e.preventDefault();
-  };
 
   return (
-    <div className="item-container" draggable onDragStart={() => onDragStart(id)} onDrop={(e) => onDropHandler(e, title)} onDragOver={(e) => onDragOverHandler(e)}>
+    <div className="item-container" draggable onDragStart={() => onDragStart(id)}>
       <form>
         <input type="checkbox" onChange={completedHandler} checked={completed} />
       </form>

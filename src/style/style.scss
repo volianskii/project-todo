@@ -2,11 +2,11 @@ $big: 5em;
 $button-font: 15px;
 $border-item-radius: 7px;
 $border-button-radius: 5px;
+
 .main-container {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -50,6 +50,8 @@ $border-button-radius: 5px;
 .add-form {
   display: flex;
   flex-direction: column;
+  min-width: 100%;
+  align-self: start;
 }
 
 .add-input {
@@ -87,6 +89,10 @@ $border-button-radius: 5px;
   background-color: rgb(190, 255, 190);
 }
 
+.bg-pink {
+  background-color: rgb(249, 239, 248);
+}
+
 .WIPdiv {
   height: 100%;
   width: 100%;
@@ -99,5 +105,7 @@ h1 {
 
 section {
   border:2px solid rgb(221, 221, 221);
+  border-radius: 30px;
   padding: 5px;
+  max-width: 400px;
 }

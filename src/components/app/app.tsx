@@ -4,52 +4,83 @@ import Add from '../add/add';
 import CompletedCount from '../completed-count/completed-count';
 import DoneList from '../done-list/done-list';
 import WIPList from '../wip-list/wip-list';
-import { useState } from 'react';
-import { toggleWIPAsync } from '../../store/todo-list/todo-list.slice';
+import { useState, DragEvent } from 'react';
+import { toggleCompletedAsync, toggleWIPAsync } from '../../store/todo-list/todo-list.slice';
 import { useAppDispatch } from '../../hooks';
 
 const App = () => {
   const dispatch = useAppDispatch();
   //сохраняем id переносимого таска
   const [dragItemId, setDragItemId] = useState<string>();
-  const onWIPDropHandler = (event: DragEvent) => {
+  const onWIPDropHandler = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    console.log(`dispatching ${dragItemId}`);
     if (dragItemId) {
       dispatch(toggleWIPAsync({
         id: dragItemId,
+        wip: true,
+        completed: false
+      }));
+      dispatch(toggleCompletedAsync({
+        id: dragItemId,
+        completed: false,
         wip: true
       }));
     }
-  }
-  const onWIPOverHandler = (event: DragEvent) => {
+  };
+  const onOverHandler = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-  }
+  };
   const onDragStartHandler = (id: string) => {
-    /* console.log(id); */
     setDragItemId(id);
   };
+  const onDoneDropHandler = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (dragItemId) {
+      dispatch(toggleWIPAsync({
+        id: dragItemId,
+        wip: false,
+        completed: true
+      }));
+      dispatch(toggleCompletedAsync({
+        id: dragItemId,
+        completed: true,
+        wip: false
+      }));
+    }
+  };
+  const onTodoDropHandler = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (dragItemId) {
+      dispatch(toggleWIPAsync({
+        id: dragItemId,
+        wip: false,
+        completed: false
+      }));
+      dispatch(toggleCompletedAsync({
+        id: dragItemId,
+        completed: false,
+        wip: false
+      }));
+    }
+  }
 
   return (
     <div className='main-container'>
       <h1>ToDo App</h1>
       <div className='container'>
-        <section>
+        <section className='task-list bg-pink'>
+          <h2>Backlog</h2>
           <Add />
-          <div className='grid-container'>
-            <TodoList onDragStart={onDragStartHandler} />
-          </div>
+          <TodoList onDragOver={onOverHandler} onDrop={onTodoDropHandler} onDragStart={onDragStartHandler} />
           <CompletedCount />
         </section>
         <section className='task-list bg-yellow'>
           <h2>WIP</h2>
-          <WIPList onDragOver={onWIPOverHandler} onDrop={onWIPDropHandler} />
+          <WIPList onDragOver={onOverHandler} onDrop={onWIPDropHandler} onDragStart={onDragStartHandler} />
         </section>
         <section className='task-list bg-green'>
           <h2>Done</h2>
-          <div className='grid-container'>
-            <DoneList />
-          </div>
+          <DoneList onDragOver={onOverHandler} onDrop={onDoneDropHandler} onDragStart={onDragStartHandler} />
         </section>
       </div>
     </div>

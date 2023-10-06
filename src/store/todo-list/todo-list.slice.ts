@@ -15,10 +15,12 @@ export const getTodosAsync = createAsyncThunk(
  type togglePayload = {
   id: string;
   completed: boolean;
+  wip: boolean;
  }
  type toggleWIPPayload = {
   id: string;
   wip: boolean;
+  completed: boolean;
  }
  type deletePayload = {
   id: string;
@@ -47,11 +49,11 @@ export const toggleCompletedAsync = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({completed: payload.completed})
+      body: JSON.stringify({completed: payload.completed, wip: payload.wip})
     });
     if(response.ok) {
       const todo = await response.json();
-      return { id: todo.id, completed: todo.completed };
+      return { id: todo.id, completed: todo.completed, wip: todo.wip };
     }
 })
 
@@ -63,11 +65,11 @@ export const toggleWIPAsync = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({wip: payload.wip})
+      body: JSON.stringify({wip: payload.wip, completed: payload.completed})
     });
     if(response.ok) {
       const todo = await response.json();
-      return { id: todo.id, wip: todo.wip };
+      return { id: todo.id, wip: todo.wip, completed: todo.completed };
     }
 })
 
