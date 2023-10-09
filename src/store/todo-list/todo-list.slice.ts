@@ -17,11 +17,6 @@ export const getTodosAsync = createAsyncThunk(
   completed: boolean;
   wip: boolean;
  }
- type toggleWIPPayload = {
-  id: string;
-  wip: boolean;
-  completed: boolean;
- }
  type deletePayload = {
   id: string;
  }
@@ -41,8 +36,8 @@ export const addTodoAsync = createAsyncThunk(
     }
 })
 
-export const toggleCompletedAsync = createAsyncThunk(
-  'todos/toggleCompletedAsync',
+export const toggleFlagsAsync = createAsyncThunk(
+  'todos/toggleFlagsAsync',
   async (payload: togglePayload) => {
     const response = await fetch (`http://localhost:7000/todos/${payload.id}`, {
       method: 'PATCH',
@@ -54,22 +49,6 @@ export const toggleCompletedAsync = createAsyncThunk(
     if(response.ok) {
       const todo = await response.json();
       return { id: todo.id, completed: todo.completed, wip: todo.wip };
-    }
-})
-
-export const toggleWIPAsync = createAsyncThunk(
-  'todos/toggleWIPAsync',
-  async (payload: toggleWIPPayload) => {
-    const response = await fetch (`http://localhost:7000/todos/${payload.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({wip: payload.wip, completed: payload.completed})
-    });
-    if(response.ok) {
-      const todo = await response.json();
-      return { id: todo.id, wip: todo.wip, completed: todo.completed };
     }
 })
 
@@ -147,18 +126,15 @@ const todoListSlice = createSlice({
       .addCase (addTodoAsync.fulfilled, (state, action) => {
         state.push(action.payload?.todo);
       })
-      .addCase (toggleCompletedAsync.fulfilled, (state, action) => {
+      .addCase (toggleFlagsAsync.fulfilled, (state, action) => {
         const index = state.findIndex((item) => item.id === action.payload?.id);
         state[index].completed = action.payload?.completed;
+        state[index].wip = action.payload?.wip;
       })
       .addCase (deleteTodoAsync.fulfilled, (state, action) => {
         state = action.payload?.todos;
         return state;
       })
-      .addCase (toggleWIPAsync.fulfilled, (state, action) => {
-        const index = state.findIndex((item) => item.id === action.payload?.id);
-        state[index].wip = action.payload?.wip;
-      });
   }
 })
 const todoReducer = todoListSlice.reducer;

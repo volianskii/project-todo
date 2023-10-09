@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { deleteTodoAsync, toggleCompletedAsync, toggleWIPAsync } from "../../store/todo-list/todo-list.slice";
+import { deleteTodoAsync, toggleFlagsAsync } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
 export type TodoItemProps = {
@@ -17,15 +17,10 @@ const TodoItem = ({ title, id, completed = false, onDragStart }: TodoItemProps):
     console.log(`${title} deleted`);
   };
   const completedHandler = () => {
-    dispatch(toggleCompletedAsync({
+    dispatch(toggleFlagsAsync({
       id: id,
       completed: !completed,
       wip: false
-    }));
-    dispatch(toggleWIPAsync({
-      id: id,
-      wip: false,
-      completed: !completed
     }));
   };
 
