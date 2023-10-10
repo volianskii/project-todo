@@ -6,7 +6,7 @@ const CompletedCount = () => {
 
   return (
     <div>
-      <p>Completed: {completedTasks.length}</p>
+      <p className='completed'>Completed: {completedTasks.length}</p>
     </div>
   )
 }

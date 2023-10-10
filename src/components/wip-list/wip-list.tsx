@@ -6,14 +6,15 @@ type WIPProps = {
   onDrop: (event: DragEvent<HTMLDivElement>) => void;
   onDragOver: (event: DragEvent<HTMLDivElement>) => void;
   onDragStart: (id: string) => void;
+  onDragLeave: (event: DragEvent<HTMLDivElement>) => void;
 }
 
-const WIPList = ({ onDrop, onDragOver, onDragStart }: WIPProps): JSX.Element => {
+const WIPList = ({ onDrop, onDragOver, onDragStart, onDragLeave }: WIPProps): JSX.Element => {
   const itemList = useAppSelector((state) => state.todoList);
   const wipList = itemList.filter((item) => (item.wip === true) && (item.completed === false));
 
   return (
-    <div onDrop={(event) => onDrop(event)} onDragOver={(event) => onDragOver(event)} className='WIPdiv'>
+    <div onDrop={(event) => onDrop(event)} onDragOver={(event) => onDragOver(event)} onDragLeave={(event) => onDragLeave(event)} className='drop-div'>
       <div className='grid-container'>
         {wipList.length !== 0 ?
           wipList.map((item) => {

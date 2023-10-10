@@ -7,9 +7,10 @@ type ToDoListProps = {
   onDragStart: (id: string) => void;
   onDrop: (event: DragEvent<HTMLDivElement>) => void;
   onDragOver: (event: DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (event: DragEvent<HTMLDivElement>) => void;
 }
 
-const TodoList = ({ onDragStart, onDrop, onDragOver }: ToDoListProps): JSX.Element => {
+const TodoList = ({ onDragStart, onDrop, onDragOver, onDragLeave }: ToDoListProps): JSX.Element => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getTodosAsync());
@@ -18,7 +19,7 @@ const TodoList = ({ onDragStart, onDrop, onDragOver }: ToDoListProps): JSX.Eleme
   const todoItemsList = itemsList.filter((item) => (item.completed === false) && (item.wip === false));
 
   return (
-    <div onDrop={(event) => onDrop(event)} onDragOver={(event) => onDragOver(event)} className='WIPdiv'>
+    <div onDrop={(event) => onDrop(event)} onDragOver={(event) => onDragOver(event)} className='drop-div' onDragLeave={(event) => onDragLeave(event)}>
       <div className='grid-container'>
         {todoItemsList.length !== 0 ?
           todoItemsList.map((item) => {

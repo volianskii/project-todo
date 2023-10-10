@@ -7,9 +7,10 @@ export type TodoItemProps = {
   id: string;
   completed: boolean;
   onDragStart: (id: string) => void;
+  ishidden?: boolean;
 }
 
-const TodoItem = ({ title, id, completed = false, onDragStart }: TodoItemProps): JSX.Element => {
+const TodoItem = ({ title, id, completed = false, onDragStart, ishidden }: TodoItemProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,9 +26,9 @@ const TodoItem = ({ title, id, completed = false, onDragStart }: TodoItemProps):
   };
 
   return (
-    <div className="item-container" draggable onDragStart={() => onDragStart(id)}>
+    <div hidden={ishidden} className="item-container" draggable onDragStart={() => onDragStart(id)}>
       <form>
-        <input type="checkbox" onChange={completedHandler} checked={completed} />
+        <input type="checkbox" onChange={completedHandler} checked={completed} style={{ width: '20px', height: '20px' }} />
       </form>
       <div>
         <p>{title}</p>

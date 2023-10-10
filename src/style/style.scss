@@ -1,7 +1,21 @@
 $big: 5em;
+$medium: 2em;
 $button-font: 15px;
 $border-item-radius: 7px;
 $border-button-radius: 5px;
+$main-font: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 40px;
+  height: 100%;
+  background: linear-gradient(70deg, rgb(93, 93, 255), rgb(255, 133, 153));
+  background-repeat: no-repeat;
+}
 
 .main-container {
   height: 100%;
@@ -14,6 +28,12 @@ $border-button-radius: 5px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.container-column {
+  box-sizing: border-box; 
+  display: flex;
+  justify-content: center;
 }
 
 .grid-container {
@@ -74,15 +94,30 @@ $border-button-radius: 5px;
   border-radius: $border-button-radius;
 }
 
+.task-list {
+  width: 100%;
+  padding-bottom: 25px;
+  border:2px solid rgb(221, 221, 221);
+  border-radius: 30px;
+  padding: 20px;
+  max-width: 400px;
+  box-shadow: 0px 0px 20px rgb(74, 74, 74);
+}
+
+.drop-div {
+  height: 100%;
+  width: 100%;
+}
+
 .task-list,
-.WIPdiv {
+.drop-div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .bg-yellow {
-  background-color: rgb(255, 255, 166);
+  background-color: rgb(224, 227, 255);
 }
 
 .bg-green {
@@ -90,7 +125,7 @@ $border-button-radius: 5px;
 }
 
 .bg-pink {
-  background-color: rgb(249, 239, 248);
+  background-color: rgb(255, 255, 237);
 }
 
 .WIPdiv {
@@ -100,12 +135,19 @@ $border-button-radius: 5px;
 
 h1 {
   font-size: $big;
-  color: rgb(134, 134, 134);
+  color: rgb(255, 255, 255);
+  font-family: $main-font;
 }
 
-section {
-  border:2px solid rgb(221, 221, 221);
-  border-radius: 30px;
-  padding: 5px;
-  max-width: 400px;
+h2 {
+  font-size: $medium;
+}
+
+p,h2, .completed {
+  font-family: $main-font;
+  color: rgb(79, 79, 79);
+}
+
+.completed {
+ font-size: 22px;
 }

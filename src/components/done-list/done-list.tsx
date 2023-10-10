@@ -6,14 +6,15 @@ type DoneListProps = {
   onDragStart: (id: string) => void;
   onDrop: (event: DragEvent<HTMLDivElement>) => void;
   onDragOver: (event: DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (event: DragEvent<HTMLDivElement>) => void;
 }
 
-const DoneList = ({ onDragStart, onDrop, onDragOver }: DoneListProps): JSX.Element => {
+const DoneList = ({ onDragStart, onDrop, onDragOver, onDragLeave }: DoneListProps): JSX.Element => {
   const itemsList = useAppSelector((state) => state.todoList);
   const doneList = itemsList.filter((item) => (item.completed === true && (item.wip === false)));
 
   return (
-    <div onDrop={(event) => onDrop(event)} onDragOver={(event) => onDragOver(event)} className='WIPdiv'>
+    <div onDrop={(event) => onDrop(event)} onDragOver={(event) => onDragOver(event)} onDragLeave={(event) => onDragLeave(event)} className='drop-div'>
       <div className='grid-container'>
         {doneList.length !== 0 ?
           doneList.map((item) => {
