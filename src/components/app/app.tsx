@@ -15,12 +15,13 @@ const App = () => {
   const onOverHandler = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    /* console.log(event);
-    event.target.style.backgroundColor = 'lightgray'; */
-    if (event.target.className == 'drop-div') {
-      event.target.style.border = '5px dashed gray';
+    console.log(event.target);
+    if ((event.target as HTMLDivElement).className == 'drop-div') {
+      (event.target as HTMLDivElement).style.border = '5px dashed gray';
+      (event.target as HTMLDivElement).style.transition = '0.2s';
     }
   };
+
   const onDragStartHandler = (id: string) => {
     setDragItemId(id);
   };
@@ -34,9 +35,9 @@ const App = () => {
         wip: true
       }));
     }
-    if (event.target.className == 'drop-div') {
-      event.target.style.backgroundColor = 'unset';
-      event.target.style.border = 'unset';
+    if ((event.target as HTMLDivElement).className == 'drop-div') {
+      (event.target as HTMLDivElement).style.backgroundColor = 'unset';
+      (event.target as HTMLDivElement).style.border = 'unset';
     };
   };
 
@@ -49,11 +50,12 @@ const App = () => {
         wip: false
       }));
     }
-    if (event.target.className == 'drop-div') {
-      event.target.style.backgroundColor = 'unset';
-      event.target.style.border = 'unset';
+    if ((event.target as HTMLDivElement).className == 'drop-div') {
+      (event.target as HTMLDivElement).style.backgroundColor = 'unset';
+      (event.target as HTMLDivElement).style.border = 'unset';
     };
   };
+
   const onTodoDropHandler = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (dragItemId) {
@@ -63,19 +65,18 @@ const App = () => {
         wip: false
       }));
     }
-    if (event.target.className == 'drop-div') {
-      event.target.style.backgroundColor = 'unset';
-      event.target.style.border = 'unset';
+    if ((event.target as HTMLDivElement).className == 'drop-div') {
+      (event.target as HTMLDivElement).style.backgroundColor = 'unset';
+      (event.target as HTMLDivElement).style.border = 'unset';
     };
   };
+
   const onDragLeaveHandler = (event: DragEvent<HTMLDivElement>) => {
 
     event.preventDefault();
-    /* console.log(event);
-    event.target.style.backgroundColor = 'lightgray'; */
-    if (event.target.className == 'drop-div') {
-      event.target.style.backgroundColor = 'unset';
-      event.target.style.border = 'unset';
+    if ((event.target as HTMLDivElement).className == 'drop-div') {
+      (event.target as HTMLDivElement).style.backgroundColor = 'unset';
+      (event.target as HTMLDivElement).style.border = 'unset';
     };
   };
 
