@@ -5,7 +5,7 @@ import CompletedCount from '../completed-count/completed-count';
 import DoneList from '../done-list/done-list';
 import WIPList from '../wip-list/wip-list';
 import { useState, DragEvent } from 'react';
-import { toggleFlagsAsync } from '../../store/todo-list/todo-list.slice';
+import { toggleFlagsAsync, toggleStatus } from '../../store/todo-list/todo-list.slice';
 import { useAppDispatch } from '../../hooks';
 
 const App = () => {
@@ -15,7 +15,6 @@ const App = () => {
   const onOverHandler = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log(event.target);
     if ((event.target as HTMLDivElement).className == 'drop-div') {
       (event.target as HTMLDivElement).style.border = '5px dashed gray';
       (event.target as HTMLDivElement).style.transition = '0.2s';
@@ -30,6 +29,11 @@ const App = () => {
     event.preventDefault();
     if (dragItemId) {
       dispatch(toggleFlagsAsync({
+        id: dragItemId,
+        completed: false,
+        wip: true
+      }));
+      dispatch(toggleStatus({
         id: dragItemId,
         completed: false,
         wip: true
@@ -49,6 +53,11 @@ const App = () => {
         completed: true,
         wip: false
       }));
+      dispatch(toggleStatus({
+        id: dragItemId,
+        completed: true,
+        wip: false
+      }));
     }
     if ((event.target as HTMLDivElement).className == 'drop-div') {
       (event.target as HTMLDivElement).style.backgroundColor = 'unset';
@@ -60,6 +69,11 @@ const App = () => {
     event.preventDefault();
     if (dragItemId) {
       dispatch(toggleFlagsAsync({
+        id: dragItemId,
+        completed: false,
+        wip: false
+      }));
+      dispatch(toggleStatus({
         id: dragItemId,
         completed: false,
         wip: false

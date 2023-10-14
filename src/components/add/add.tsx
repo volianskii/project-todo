@@ -1,20 +1,34 @@
-import { FormEvent, useState } from "react";
-import { useAppDispatch } from '../../hooks/index';
+import { FormEvent, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { addTodo, addTodoAsync } from '../../store/todo-list/todo-list.slice'
+import { changeRejectedStatus } from "../../store/rejected-status/rejected-status.slice";
 
 const Add = () => {
   const [value, setValue] = useState<string>('');
   const dispatch = useAppDispatch();
+  const rejectedStatus = useAppSelector((state) => state.rejectedStatus.rejectedStatus);
+  const todos = useAppSelector((state) => state.todoList);
   const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     if (value !== '') {
       dispatch(addTodoAsync({
         title: value,
       }));
-      setValue('');
     }
   }
 
+  useEffect(() => {
+    if (rejectedStatus) {
+      dispatch(addTodo({
+        title: value,
+      }));
+      dispatch(changeRejectedStatus(false));
+    }
+  }, [rejectedStatus])
+
+  useEffect(() => {
+    setValue('');
+  }, [todos])
 
   return (
     <form onSubmit={submitHandler} className="add-form">

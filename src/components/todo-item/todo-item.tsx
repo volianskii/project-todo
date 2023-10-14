@@ -1,5 +1,5 @@
-import { FormEvent } from "react";
-import { deleteTodoAsync, toggleFlagsAsync } from "../../store/todo-list/todo-list.slice";
+import { FormEvent, useEffect } from "react";
+import { deleteTodo, deleteTodoAsync, toggleFlagsAsync, toggleStatus } from "../../store/todo-list/todo-list.slice";
 import { useAppDispatch } from "../../hooks";
 
 export type TodoItemProps = {
@@ -15,7 +15,7 @@ const TodoItem = ({ title, id, completed = false, onDragStart, ishidden }: TodoI
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(deleteTodoAsync({ id }));
-    console.log(`${title} deleted`);
+    dispatch(deleteTodo({ id }));
   };
   const completedHandler = () => {
     dispatch(toggleFlagsAsync({
@@ -23,8 +23,15 @@ const TodoItem = ({ title, id, completed = false, onDragStart, ishidden }: TodoI
       completed: !completed,
       wip: false
     }));
+    dispatch(toggleStatus({
+      id: id,
+      completed: !completed,
+      wip: false
+    }));
   };
-
+  useEffect(() => {
+    console.log(title, id);
+  }, [title])
   return (
     <div hidden={ishidden} className="item-container" draggable onDragStart={() => onDragStart(id)}>
       <form>
