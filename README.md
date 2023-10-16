@@ -6,4 +6,6 @@ Changing the status of "backlog" to the status of "done" is handled either by us
 The number of completed tasks is calculated and displayed at the bottom of the backlog section.
 The user can delete tasks by clicking on the "Delete" button.
 
+The current version is for offline usage.
+
 Deploy: https://unaccountable-bee.surge.sh/
