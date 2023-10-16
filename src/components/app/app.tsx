@@ -6,7 +6,7 @@ import DoneList from '../done-list/done-list';
 import WIPList from '../wip-list/wip-list';
 import { useState, DragEvent } from 'react';
 import { toggleFlagsAsync, toggleStatus } from '../../store/todo-list/todo-list.slice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const App = () => {
   const dispatch = useAppDispatch();

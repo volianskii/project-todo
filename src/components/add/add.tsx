@@ -20,7 +20,12 @@ const Add = () => {
 
   useEffect(() => {
     if (rejectedStatus) {
-      toast.warn('The server is not available. Please do not reload the page.');
+      toast.warn(
+        'The server is not available. Please do not reload the page.',
+        {
+          autoClose: 2700
+        }
+      );
       dispatch(addTodo({
         title: value,
       }));
