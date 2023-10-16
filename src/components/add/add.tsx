@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { addTodo, addTodoAsync } from '../../store/todo-list/todo-list.slice'
 import { changeRejectedStatus } from "../../store/rejected-status/rejected-status.slice";
+import { toast } from 'react-toastify';
 
 const Add = () => {
   const [value, setValue] = useState<string>('');
@@ -19,6 +20,7 @@ const Add = () => {
 
   useEffect(() => {
     if (rejectedStatus) {
+      toast.warn('The server is not available. Please do not reload the page.');
       dispatch(addTodo({
         title: value,
       }));

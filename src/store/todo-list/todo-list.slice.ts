@@ -91,7 +91,7 @@ const todoListSlice = createSlice({
     },
     {
       id: '4',
-      title: 'todffo4',
+      title: 'todo4',
       completed: false,
       wip: false,
     },
