@@ -8,6 +8,7 @@ const Add = () => {
   const [value, setValue] = useState<string>('');
   const dispatch = useAppDispatch();
   const rejectedStatus = useAppSelector((state) => state.rejectedStatus.rejectedStatus);
+  const pendingStatus = useAppSelector((state) => state.rejectedStatus.pendingStatus);
   const todos = useAppSelector((state) => state.todoList);
   const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -40,7 +41,7 @@ const Add = () => {
   return (
     <form onSubmit={submitHandler} className="add-form">
       <input type="text" className="add-input" placeholder="Add todo.." value={value} onChange={(event) => setValue(event.target.value)} />
-      <button type="submit" className="add-button">Add</button>
+      <button type="submit" disabled={pendingStatus} className="add-button">Add</button>
     </form>
   )
 }

@@ -65,6 +65,7 @@ body {
   height: 25px;
   font-size: $button-font;
   border-radius: $border-button-radius;
+  cursor: pointer;
 }
 
 .add-form {
@@ -92,6 +93,11 @@ body {
   color: rgb(134, 134, 134);
   background-color: rgb(185, 255, 185);
   border-radius: $border-button-radius;
+  cursor: pointer;
+}
+
+.add-button:active {
+  border: 1px solid rgb(134, 134, 134);
 }
 
 .task-list {

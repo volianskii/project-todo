@@ -35,7 +35,7 @@ const TodoItem = ({ title, id, completed = false, onDragStart, ishidden }: TodoI
   return (
     <div hidden={ishidden} className="item-container" draggable onDragStart={() => onDragStart(id)}>
       <form>
-        <input type="checkbox" onChange={completedHandler} checked={completed} style={{ width: '20px', height: '20px' }} />
+        <input type="checkbox" onChange={completedHandler} checked={completed} style={{ width: '20px', height: '20px', cursor: 'pointer' }} />
       </form>
       <div>
         <p>{title}</p>
