@@ -28,6 +28,7 @@ body {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }
 
 .container-column {
@@ -66,6 +67,10 @@ body {
   font-size: $button-font;
   border-radius: $border-button-radius;
   cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: rgb(202, 0, 0);
 }
 
 .add-form {
@@ -156,4 +161,11 @@ p,h2, .completed {
 
 .completed {
  font-size: 22px;
+}
+
+@media (max-width: 800px) {
+  .container {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+  }
 }
